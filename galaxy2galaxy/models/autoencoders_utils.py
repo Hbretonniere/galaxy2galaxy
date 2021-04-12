@@ -71,11 +71,11 @@ def autoencoder_body(self, features):
   is_training = hparams.mode == tf.estimator.ModeKeys.TRAIN
 
   output_activation = tf.nn.softplus if hparams.output_activation == 'softplus' else None
+  input_shape =  [None, ] + common_layers.shape_list(features["inputs"])[1:]
 
   if hparams.mode == tf.estimator.ModeKeys.PREDICT:
     # In predict mode, we also define TensorFlow Hub modules for all pieces of
     # the autoencoder
-    input_shape =  [None, ] + common_layers.shape_list(features["inputs"])[1:]
     # First build encoder spec
     def make_model_spec():
       input_layer = tf.placeholder(tf.float32, shape=input_shape)
